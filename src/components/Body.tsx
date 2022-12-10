@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Result from "../models/films";
 import { formatDateStr } from "../helper/helper";
+import media from "../styles/media";
 
 const Body = () => {
   const [result, setResult] = useState<Result[]>([]);
@@ -37,21 +38,24 @@ const Body = () => {
         </form>
       </FormContainer>
       <MovieSection>
-        <div>
-          <h5>Movie Titles</h5>
-          <ul className="cards">
+        <h5>Movie Titles</h5>
+        <CardContainer>
+          <div className="row">
             {newResult &&
               newResult.map((i, index) => (
-                <li className="card" key={index}>
-                  <div>
-                    <p>{i.title}</p>
-                    <p>{formatDateStr(i.created)}</p>
-                  </div>
-                </li>
+                <div className="card" key={index}>
+                  <p className="card-text">
+                    {i.title} <br /> {formatDateStr(i.created)}
+                  </p>
+                </div>
               ))}
-          </ul>
-          {newResult.length === 0 && <h1>LOOK FOR SOMETHING ELSE</h1>}
-        </div>
+          </div>
+          {newResult.length === 0 && (
+            <div className="errorMessage">
+              <h1>Sorry! No Movie Name {filterTitle} Here 😂 </h1>
+            </div>
+          )}
+        </CardContainer>
       </MovieSection>
     </>
   );
@@ -80,103 +84,78 @@ const FormContainer = styled.div`
       box-sizing: border-box;
     }
   }
+
+  @media (max-width: 500px) {
+    padding: 63px 27px 48px 28px;
+  }
+`;
+
+const CardContainer = styled.div`
+  .row {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 10px;
+  }
+  .card {
+    border-radius: 12px;
+    background: black;
+    color: white;
+    width: 300px;
+    height: 300px;
+    padding: 0.75rem;
+    margin: 2rem 0px;
+    border: 0;
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+
+  ${media.mobile} {
+    .card {
+      border-radius: 12px;
+      background: black;
+      color: white;
+      width: 200px;
+      height: 200px;
+      padding: 0.75rem;
+      margin: 2rem 0px;
+      border: 0;
+      flex-basis: auto;
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+  }
+
+  .card-text {
+    text-align: center;
+    padding-top: calc(100% - 160px);
+  }
+
+  .errorMessage {
+    height: 300px;
+    padding: 1rem;
+    margin: 2rem;
+
+    h1 {
+      text-align: center;
+      padding-top: 50px;
+    }
+  }
 `;
 
 const MovieSection = styled.div`
   padding: 0px 0px 0px 77px;
 
+  ${media.mobile} {
+    padding: 0px 0px 0px 28px;
+  }
+
   h1 {
     color: black;
     text-align: center;
-  }
-
-  p {
-    color: white;
-  }
-  .cards {
-    display: grid;
-    grid-auto-columns: 100%;
-    grid-column-gap: 10px;
-    grid-auto-flow: column;
-    padding: 25px 0px;
-    list-style: none;
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
-  }
-
-  li {
-    div {
-      text-align: center;
-      margin: auto;
-    }
-  }
-
-  .card {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    height: 280px;
-    background: var(--white);
-    border-radius: 12px;
-    background: black;
-    scroll-snap-align: start;
-    transition: all 0.2s;
-    align-items: center;
-  }
-
-  .cards::-webkit-scrollbar {
-    height: 12px;
-  }
-
-  .cards::-webkit-scrollbar-thumb,
-  .cards::-webkit-scrollbar-track {
-    border-radius: 92px;
-  }
-
-  .cards::-webkit-scrollbar-thumb {
-    background: var(--darkorange);
-  }
-
-  .cards::-webkit-scrollbar-track {
-    background: var(--thumb);
-  }
-
-  @media (max-width: 500px) {
-    .cards {
-      grid-auto-columns: calc(50% - 10px);
-      grid-column-gap: 20px;
-    }
-
-    .card {
-      display: flex;
-      flex-direction: column;
-      padding: 20px;
-      width: 180px;
-      height: 180px;
-      background: var(--white);
-      border-radius: 12px;
-      background: black;
-      scroll-snap-align: start;
-      transition: all 0.2s;
-      align-items: center;
-    }
-  }
-
-  @media (min-width: 700px) {
-    .cards {
-      grid-auto-columns: calc(calc(100% / 3) - 20px);
-      grid-column-gap: 10px;
-    }
-  }
-
-  @media (min-width: 1100px) {
-    .cards {
-      grid-auto-columns: calc(25% - 30px);
-      grid-column-gap: 10px;
-    }
-  }
-
-  @media (max-width: 500px) {
-    padding: 63px 0px 48px 28px;
   }
 `;
