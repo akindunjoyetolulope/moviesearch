@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-// import bg from "../assets/bg.png";
+import bg from "../assets/bg.png";
 
 const Header = () => {
   return (
@@ -36,7 +36,7 @@ const NavBar = styled.div`
 const HeaderEl = styled.div`
   height: 550px;
   padding: 109px 0px 159px 77px;
-  /* background: url("../images/bg.png") no-repeat; */
+  background: url(${bg}) no-repeat;
   border: 1px solid black;
 
   div {
@@ -45,6 +45,7 @@ const HeaderEl = styled.div`
     /* border: 1px solid red; */
 
     h1 {
+      color: white;
       font-size: 62px;
     }
   }
