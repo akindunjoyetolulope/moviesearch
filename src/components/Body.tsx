@@ -26,8 +26,8 @@ const Body = () => {
 
   console.log(result);
 
-  const seriesOnes = result.filter((type) => type.Type === "series");
-  const moviesOnes = result.filter((type) => type.Type === "movie");
+  const seriesOnes = result?.filter((type) => type.Type === "series");
+  const moviesOnes = result?.filter((type) => type.Type === "movie");
 
   return (
     <>
@@ -35,7 +35,7 @@ const Body = () => {
         <form>
           <label htmlFor="search">
             {" "}
-            Search for movies or series ( more than three letter words 😂){" "}
+            Search for movies or series ( *more than three letter words 😂){" "}
           </label>
           <br />
           <input type="text" value={filterTitle} onChange={handleform} />
@@ -61,7 +61,7 @@ const Body = () => {
           </CardContainer>
         </MovieSection>
       )}
-      {result.length > 0 && (
+      {result?.length > 0 && (
         <div>
           {moviesOnes.length > 0 && (
             <MovieSection>
