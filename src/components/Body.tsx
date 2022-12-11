@@ -8,7 +8,7 @@ import useUpdatedEffect from "../hooks/useUpdatedEffect";
 const Body = () => {
   const [filterTitle, setFilterTitle] = useState("");
 
-  const { result, isLoading, api } = useHttp();
+  const { result, isLoading, api, hasError } = useHttp();
 
   const debouncedQueryUpdate = React.useMemo(
     () => debounce((searchString: string) => api(searchString), 1000),
@@ -33,7 +33,10 @@ const Body = () => {
     <>
       <FormContainer>
         <form>
-          <label htmlFor="search"> Search </label>
+          <label htmlFor="search">
+            {" "}
+            Search for movies or series ( more than three letter words 😂){" "}
+          </label>
           <br />
           <input type="text" value={filterTitle} onChange={handleform} />
         </form>
@@ -43,6 +46,17 @@ const Body = () => {
           <CardContainer>
             <div className="errorMessage">
               <h1>movies loading...</h1>{" "}
+            </div>
+          </CardContainer>
+        </MovieSection>
+      )}
+      {hasError && (
+        <MovieSection>
+          <CardContainer>
+            <div className="errorMessage">
+              <h5>
+                Fail To Fetch check your network connection, Try again later.
+              </h5>{" "}
             </div>
           </CardContainer>
         </MovieSection>
@@ -198,6 +212,10 @@ const MovieSection = styled.div`
   }
 
   h3 {
+    text-align: center;
+  }
+
+  h5 {
     text-align: center;
   }
 
