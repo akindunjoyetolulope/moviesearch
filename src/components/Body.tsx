@@ -47,12 +47,11 @@ const Body = () => {
           </CardContainer>
         </MovieSection>
       )}
-
-      {result.length > 0 && (
+      {result.length > 0 ? (
         <div>
           {moviesOnes.length > 0 && (
             <MovieSection>
-              <h5>Movies</h5>
+              <h5>{moviesOnes.length > 1 ? "Movies" : "Movie"}</h5>
               <CardContainer>
                 <div className="row">
                   {moviesOnes?.map((i, index) => (
@@ -68,7 +67,7 @@ const Body = () => {
           )}
           {seriesOnes.length > 0 && (
             <MovieSection>
-              <h5>series</h5>
+              <h5>{seriesOnes.length > 1 ? "Series" : "Serie"}</h5>
               <CardContainer>
                 <div className="row">
                   {seriesOnes?.map((i, index) => (
@@ -83,17 +82,23 @@ const Body = () => {
             </MovieSection>
           )}
         </div>
-      )}
-      <div>
+      ) : (
         <MovieSection>
-          <div className="search">
-            <h3> Search For Any Movie Title </h3>
+          <div className="errorMessage">
+            <h3>
+              SEARCH FOR MOVIES OR SERIES <br /> ( more than three letter words
+              😂 )
+            </h3>
           </div>
-          {/* <div className="errorMessage">
-            <h1>Sorry! No Movie Name {filterTitle} Here 😂 </h1>
-          </div> */}
         </MovieSection>
-      </div>
+      )}
+      {/* <div>
+        <MovieSection>
+          <div className="errorMessage">
+            <h1>Sorry! No Movie Name {filterTitle} Here 😂 </h1>
+          </div>
+        </MovieSection>
+      </div> */}
     </>
   );
 };
@@ -180,7 +185,7 @@ const CardContainer = styled.div`
 `;
 
 const MovieSection = styled.div`
-  padding: 0px 50px 0px 77px;
+  padding: 0px 0px 0px 77px;
 
   ${media.mobile} {
     padding: 0px 0px 0px 28px;
