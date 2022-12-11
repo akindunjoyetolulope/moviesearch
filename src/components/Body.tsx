@@ -6,6 +6,7 @@ import media from "../styles/media";
 
 const Body = () => {
   const [result, setResult] = useState<Result[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [filterTitle, setFilterTitle] = useState("");
 
   const api = async () => {
@@ -14,6 +15,7 @@ const Body = () => {
     });
     const jsonData = await data.json();
     setResult(jsonData.results);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -37,26 +39,38 @@ const Body = () => {
           />
         </form>
       </FormContainer>
-      <MovieSection>
-        <h5>Movie Titles</h5>
-        <CardContainer>
-          <div className="row">
-            {newResult &&
-              newResult.map((i, index) => (
-                <div className="card" key={index}>
-                  <p className="card-text">
-                    {i.title} <br /> {formatDateStr(i.created)}
-                  </p>
-                </div>
-              ))}
-          </div>
-          {newResult.length === 0 && (
+      {isLoading ? (
+        <MovieSection>
+          <CardContainer>
             <div className="errorMessage">
-              <h1>Sorry! No Movie Name {filterTitle} Here 😂 </h1>
+              <h1>movies loading...</h1>{" "}
             </div>
-          )}
-        </CardContainer>
-      </MovieSection>
+          </CardContainer>
+        </MovieSection>
+      ) : (
+        <div>
+          <MovieSection>
+            <h5>Movie Titles</h5>
+            <CardContainer>
+              <div className="row">
+                {newResult &&
+                  newResult.map((i, index) => (
+                    <div className="card" key={index}>
+                      <p className="card-text">
+                        {i.title} <br /> {formatDateStr(i.created)}
+                      </p>
+                    </div>
+                  ))}
+              </div>
+              {newResult.length === 0 && (
+                <div className="errorMessage">
+                  <h1>Sorry! No Movie Name {filterTitle} Here 😂 </h1>
+                </div>
+              )}
+            </CardContainer>
+          </MovieSection>
+        </div>
+      )}
     </>
   );
 };
