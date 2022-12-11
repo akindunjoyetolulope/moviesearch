@@ -1,30 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
-import Result from "../models/films";
-import { formatDateStr } from "../helper/helper";
+import debounce from "lodash.debounce";
 import media from "../styles/media";
+import useHttp from "../hooks/useHttp";
+import useUpdatedEffect from "../hooks/useUpdatedEffect";
 
 const Body = () => {
-  const [result, setResult] = useState<Result[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [filterTitle, setFilterTitle] = useState("");
 
-  const api = async () => {
-    const data = await fetch("https://swapi.dev/api/films/", {
-      method: "GET",
-    });
-    const jsonData = await data.json();
-    setResult(jsonData.results);
-    setIsLoading(false);
-  };
+  const { result, isLoading, api } = useHttp();
 
-  useEffect(() => {
-    api();
-  }, []);
-
-  const newResult = result.filter((title) =>
-    title.title.toLocaleLowerCase().includes(filterTitle)
+  const debouncedQueryUpdate = React.useMemo(
+    () => debounce((searchString: string) => api(searchString), 1000),
+    [api]
   );
+
+  useUpdatedEffect(() => {
+    if (!(filterTitle.length > 2)) return;
+    debouncedQueryUpdate(filterTitle);
+  }, [filterTitle]);
+
+  console.log(result);
+
+  const seriesOnes = result.filter((type) => type.Type === "series");
+  const moviesOnes = result.filter((type) => type.Type === "movie");
 
   return (
     <>
@@ -39,7 +38,7 @@ const Body = () => {
           />
         </form>
       </FormContainer>
-      {isLoading ? (
+      {isLoading && (
         <MovieSection>
           <CardContainer>
             <div className="errorMessage">
@@ -47,30 +46,54 @@ const Body = () => {
             </div>
           </CardContainer>
         </MovieSection>
-      ) : (
+      )}
+
+      {result.length > 0 && (
         <div>
-          <MovieSection>
-            <h5>Movie Titles</h5>
-            <CardContainer>
-              <div className="row">
-                {newResult &&
-                  newResult.map((i, index) => (
+          {moviesOnes.length > 0 && (
+            <MovieSection>
+              <h5>Movies</h5>
+              <CardContainer>
+                <div className="row">
+                  {moviesOnes?.map((i, index) => (
                     <div className="card" key={index}>
                       <p className="card-text">
-                        {i.title} <br /> {formatDateStr(i.created)}
+                        {i.Title} <br /> {i.Year}
                       </p>
                     </div>
                   ))}
-              </div>
-              {newResult.length === 0 && (
-                <div className="errorMessage">
-                  <h1>Sorry! No Movie Name {filterTitle} Here 😂 </h1>
                 </div>
-              )}
-            </CardContainer>
-          </MovieSection>
+              </CardContainer>
+            </MovieSection>
+          )}
+          {seriesOnes.length > 0 && (
+            <MovieSection>
+              <h5>series</h5>
+              <CardContainer>
+                <div className="row">
+                  {seriesOnes?.map((i, index) => (
+                    <div className="card" key={index}>
+                      <p className="card-text">
+                        {i.Title} <br /> {i.Year}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </CardContainer>
+            </MovieSection>
+          )}
         </div>
       )}
+      <div>
+        <MovieSection>
+          <div className="search">
+            <h3> Search For Any Movie Title </h3>
+          </div>
+          {/* <div className="errorMessage">
+            <h1>Sorry! No Movie Name {filterTitle} Here 😂 </h1>
+          </div> */}
+        </MovieSection>
+      </div>
     </>
   );
 };
@@ -153,16 +176,11 @@ const CardContainer = styled.div`
     height: 300px;
     padding: 1rem;
     margin: 2rem;
-
-    h1 {
-      text-align: center;
-      padding-top: 50px;
-    }
   }
 `;
 
 const MovieSection = styled.div`
-  padding: 0px 0px 0px 77px;
+  padding: 0px 50px 0px 77px;
 
   ${media.mobile} {
     padding: 0px 0px 0px 28px;
@@ -171,5 +189,15 @@ const MovieSection = styled.div`
   h1 {
     color: black;
     text-align: center;
+  }
+
+  h3 {
+    text-align: center;
+  }
+
+  .search {
+    margin-bottom: 20px;
+    padding: 12px;
+    color: red;
   }
 `;

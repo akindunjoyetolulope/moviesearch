@@ -1,17 +1,14 @@
-export interface FilmsResponse {
+export default interface FilmsResponse {
   count: number;
-  next: null;
-  previous: null;
-  results: Result[];
+  respons: boolean;
+  totalResult: string;
+  search: Search[];
 }
 
-export default interface Result {
-  characters: string[];
-  created: string;
-  director: string;
-  edited: string;
-  opening_crawl: string;
-  producer: string;
-  release_date: string;
-  title: string;
+export interface Search {
+  poster: string;
+  Title: string;
+  Type: string;
+  Year: string;
+  imdbID: string;
 }
