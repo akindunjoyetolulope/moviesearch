@@ -16,6 +16,7 @@ const Body = () => {
   );
 
   const handleform = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     setFilterTitle(e.target.value.toLocaleLowerCase());
   };
 
@@ -32,14 +33,14 @@ const Body = () => {
   return (
     <>
       <FormContainer>
-        <form>
+        <div>
           <label htmlFor="search">
             {" "}
             Search for movies or series ( *more than three letter words 😂){" "}
           </label>
           <br />
           <input type="text" value={filterTitle} onChange={handleform} />
-        </form>
+        </div>
       </FormContainer>
       {isLoading && (
         <MovieSection>
@@ -65,7 +66,7 @@ const Body = () => {
         <div>
           {moviesOnes.length > 0 && (
             <MovieSection>
-              <h5>{moviesOnes.length > 1 ? "Movies" : "Movie"}</h5>
+              <h4>{moviesOnes.length > 1 ? "Movies" : "Movie"}</h4>
               <CardContainer>
                 <div className="row">
                   {moviesOnes?.map((i, index) => (
@@ -81,7 +82,7 @@ const Body = () => {
           )}
           {seriesOnes.length > 0 && (
             <MovieSection>
-              <h5>{seriesOnes.length > 1 ? "Series" : "Serie"}</h5>
+              <h4>{seriesOnes.length > 1 ? "Series" : "Serie"}</h4>
               <CardContainer>
                 <div className="row">
                   {seriesOnes?.map((i, index) => (
@@ -123,7 +124,7 @@ export default Body;
 const FormContainer = styled.div`
   padding: 63px 57px 48px 77px;
 
-  form {
+  div {
     input {
       height: 54px;
       width: 100%;
