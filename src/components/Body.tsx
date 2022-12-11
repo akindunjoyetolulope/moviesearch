@@ -34,7 +34,9 @@ const Body = () => {
           <input
             type="text"
             value={filterTitle}
-            onChange={(e) => setFilterTitle(e.target.value.toLocaleLowerCase())}
+            onChange={(e) =>
+              setFilterTitle(e.target.value.toLocaleLowerCase().trim())
+            }
           />
         </form>
       </FormContainer>

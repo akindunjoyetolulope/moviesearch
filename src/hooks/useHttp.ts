@@ -5,7 +5,7 @@ const APIKEY = "1ce1ecfe";
 const useHttp = () => {
   const [result, setResult] = useState<Search[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  //   const [hasError, setHasError] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   const api = async (filterTitle: string = "bat") => {
     setIsLoading(true);
