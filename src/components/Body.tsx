@@ -15,9 +15,13 @@ const Body = () => {
     [api]
   );
 
+  const handleform = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterTitle(e.target.value.toLocaleLowerCase());
+  };
+
   useUpdatedEffect(() => {
     if (!(filterTitle.length > 2)) return;
-    debouncedQueryUpdate(filterTitle);
+    debouncedQueryUpdate(filterTitle.trim());
   }, [filterTitle]);
 
   console.log(result);
@@ -31,13 +35,7 @@ const Body = () => {
         <form>
           <label htmlFor="search"> Search </label>
           <br />
-          <input
-            type="text"
-            value={filterTitle}
-            onChange={(e) =>
-              setFilterTitle(e.target.value.toLocaleLowerCase().trim())
-            }
-          />
+          <input type="text" value={filterTitle} onChange={handleform} />
         </form>
       </FormContainer>
       {isLoading && (
