@@ -49,7 +49,7 @@ const Body = () => {
           </CardContainer>
         </MovieSection>
       )}
-      {result.length > 0 ? (
+      {result.length > 0 && (
         <div>
           {moviesOnes.length > 0 && (
             <MovieSection>
@@ -84,7 +84,8 @@ const Body = () => {
             </MovieSection>
           )}
         </div>
-      ) : (
+      )}
+      {/* : (
         <MovieSection>
           <div className="errorMessage">
             <h3>
@@ -93,7 +94,7 @@ const Body = () => {
             </h3>
           </div>
         </MovieSection>
-      )}
+      ) */}
       {/* <div>
         <MovieSection>
           <div className="errorMessage">
