@@ -35,8 +35,11 @@ const Body = () => {
       <FormContainer>
         <div>
           <label htmlFor="search">
-            {" "}
-            Search for movies or series ( *more than three letter words 😂){" "}
+            Search for movies or series ({" "}
+            <em>
+              <strong>*more than three letter words</strong>
+            </em>{" "}
+            )
           </label>
           <br />
           <input type="text" value={filterTitle} onChange={handleform} />

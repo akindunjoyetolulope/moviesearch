@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import bg from "../assets/bg.png";
+import media from "../styles/media";
 
 const Header = () => {
   return (
@@ -24,6 +25,15 @@ const NavBar = styled.div`
   background: #292929;
   padding: 40px 0px 40px 77px;
 
+  ${media.tablet} {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0px 40px 0px;
+    h1 {
+      text-align: center;
+    }
+  }
+
   h2 {
     width: 193px;
     height: 60px;
@@ -46,15 +56,23 @@ const HeaderEl = styled.div`
 
     h1 {
       color: white;
-      font-size: 62px;
+      font-size: 72px;
     }
   }
 
-  @media (max-width: 500px) {
+  ${media.tablet} {
+    display: flex;
+    justify-content: center;
+    padding: 109px 0px 159px 0px;
+    h1 {
+      text-align: center;
+    }
+  }
+
+  ${media.mobile} {
     height: 257px;
     div {
       width: 100%;
-      /* border: 1px solid red; */
 
       h1 {
         font-size: 32px;
