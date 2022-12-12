@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <>
       <NavBar>
-        <h2>My Test App</h2>
+        <h2>MyTestApp</h2>
       </NavBar>
       <HeaderEl className="main-image ">
         <div>
