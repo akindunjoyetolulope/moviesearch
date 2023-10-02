@@ -65,7 +65,7 @@ const Body = () => {
           </CardContainer>
         </MovieSection>
       )}
-      {result?.length > 0 && (
+      {result?.length > 0 && !isLoading && (
         <div>
           {moviesOnes.length > 0 && (
             <MovieSection>

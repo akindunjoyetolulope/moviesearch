@@ -44,9 +44,9 @@ const NavBar = styled.div`
 `;
 
 const HeaderEl = styled.div`
-  height: 550px;
-  padding: 109px 0px 159px 77px;
-  background: url(${bg}) no-repeat;
+  height: 350px;
+  padding: 39px 0px 159px 77px;
+  background: url(${bg});
   border: 1px solid black;
 
   div {
